@@ -18,6 +18,10 @@
         }
         var nav = null;
         var watchID;
+		var flag = 0;
+		var lastLat;
+		var lastLon;
+		var lastTime;
         function listenForPosition() {
             if (nav == null) {
                 nav = window.navigator;
@@ -98,13 +102,27 @@
         }
 
         window.setInterval(function(){
+			if (flag != 0){
+				var newTime = Math.round(new Date().getTime() / 1000);
+				var newLat = position.coords.latitude;
+				var newLon = position.coords.longitude;
+				var dist = geo_dist(newLat,lastLat,newLon,lastLon);
+				var dt = newTime - lastTime;
+				var speed = dist/dt;
+			}
+			lastLat = newLat;
+			lastLon = newLon;
+			lastTime = newTime;
+			flag = 1;
+			string = 
             socket.emit('algorithm_random_forest', {
                 'authToken': 'b6886aca941c817730544b346c0bdd2f',
                 'device_id': 'geolocation1',
                 'train': '3913',
                 // TODO: Brandon, please help add a geodesic speed calculation here as test data.
                 // Note that might require the client code to remember previous position
-                'test': '{"V1":1.234}',
+                'test': sprintf('{"V1":%d}',speed),
+				//'{"V1":1.234}'
                 'dependentVariable': 'V2'
             });
 
