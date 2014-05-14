@@ -66,7 +66,7 @@
                 var newLat = position.coords.latitude;
                 var newLon = position.coords.longitude;
                 var dist = geo_dist(newLat,lastLat,newLon,lastLon);
-                alert(dist);
+                //alert(dist);
                 var dt = newTime - lastTime;
                 speed = dist/dt;
                 setText(speed, "speed");
