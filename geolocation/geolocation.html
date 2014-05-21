@@ -24,6 +24,15 @@
 		var lastTime = 0;
         var speed = 0;
         function listenForPosition() {
+            flag = 0;
+            lastLat = "";
+            lastLon = "";
+            lastTime = "";
+            speed = 0;
+            setText(lastLat, "oldlatitude");
+            setText(lastLon, "oldlongitude");
+            setText(lastTime, "oldtime");
+            setText("", "speed");
             if (nav == null) {
                 nav = window.navigator;
             }
